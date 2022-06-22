@@ -49,7 +49,7 @@ def turn(update: Update, context: CallbackContext):
 
         return ConversationHandler.END
 
-    bot_choice = ai.get_bot_turn(moves)
+    bot_choice = ai.get_bot_turn(moves, next_sym)
     moves[bot_choice] = next_sym
 
     if tic.check_winers(moves, next_sym, bot_choice):
@@ -100,7 +100,7 @@ def select(update: Update, context: CallbackContext):
     if sym == cur_sym:
         msg = f"Ваш выбор: {cur_sym}\n Начинаем, ваш ход..."
     else:
-        bot_choice = ai.get_bot_turn(moves)
+        bot_choice = ai.get_bot_turn(moves, next_sym)
         moves[bot_choice] = next_sym
         msg = f"Ваш выбор: {cur_sym}\nПервым начинают - {next_sym}.\nИ ход соперника - {bot_choice}"
 

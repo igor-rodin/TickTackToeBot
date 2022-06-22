@@ -2,6 +2,7 @@ from math import sqrt
 from random import choice
 
 symbols = ('❌', '⭕')
+sym_dict = {'❌': 'X', '⭕': 'O'}
 
 
 def init_board(size=3):
