@@ -4,7 +4,7 @@ from telegram.ext import CallbackContext, ConversationHandler
 from menu import create_choose_menu, create_board
 from const import GameState
 import tictactoe as tic
-import botai as ai
+import bot_ai as ai
 
 
 cur_sym = tic.symbols[0]
