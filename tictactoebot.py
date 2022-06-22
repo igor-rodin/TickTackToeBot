@@ -3,14 +3,16 @@ from telegram.ext import (Filters,
 import cmd_handlers as chdl
 from const import GameState
 
-digits = "|".join([str(i) for i in range(1, 9)])
+digits = "|".join([str(i) for i in range(1, 10)])
 digit_pattern = f"^{digits}$"
 
 game_state_hdl = ConversationHandler(
     entry_points=[CommandHandler('new_game', chdl.new_game)],
     states={
-        GameState.FIRST_TURN: CallbackQueryHandler(
-            chdl.turn, pattern=digit_pattern)
+        GameState.START_TURN: [CallbackQueryHandler(
+            chdl.select)],
+        GameState.USER_TURN: [CallbackQueryHandler(
+            chdl.turn, pattern=digit_pattern)],
     },
     fallbacks=[CommandHandler('end_game', chdl.end_game)]
 )
@@ -24,8 +26,7 @@ def get_tocken() -> str:
 
 def init_handlers(dispather: Dispatcher):
     dispather.add_handler(CommandHandler(['start', 'help'], chdl.start))
-    dispather.add_handler(CommandHandler('new_game', chdl.new_game))
-    dispather.add_handler(CallbackQueryHandler(chdl.select))
+    dispather.add_handler(game_state_hdl)
 
 
 def run():
