@@ -1,0 +1,13 @@
+APScheduler==3.6.3
+autopep8==1.6.0
+cachetools==4.2.2
+certifi==2022.6.15
+pycodestyle==2.8.0
+python-telegram-bot==13.12
+pytz==2022.1
+pytz-deprecation-shim==0.1.0.post0
+six==1.16.0
+toml==0.10.2
+tornado==6.1
+tzdata==2022.1
+tzlocal==4.2
