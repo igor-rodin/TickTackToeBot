@@ -22,10 +22,10 @@ def get_bot_turn(moves: list, sym: str, mode=2) -> int:
     else:
         free_moves = tuple(filter(str.isdigit, moves))
         res = int(bai.get_bot_turn(list2str(moves), toe.sym_dict[sym], mode))
-        while moves[res] not in free_moves:
+        while moves[res - 1] not in free_moves:
             res = int(bai.get_bot_turn(
                 list2str(moves), toe.sym_dict[sym], mode))
-        return res
+        return res - 1
 
 
 def get_dummy_turn(moves: list) -> int:
