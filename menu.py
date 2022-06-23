@@ -1,6 +1,13 @@
 from telegram import (InlineKeyboardButton, InlineKeyboardMarkup)
 
 
+def create_mode_menu(dict_mode: dict) -> InlineKeyboardMarkup:
+
+    menu_layot = [[InlineKeyboardButton(
+        dict_mode[val], callback_data=str(val)) for val in (1, 2, 3)]]
+    return InlineKeyboardMarkup(menu_layot, resize_keyboard=True)
+
+
 def create_choose_menu(comands: list) -> InlineKeyboardMarkup:
     menu_layot = [[InlineKeyboardButton(
         val, callback_data=val) for val in comands]]

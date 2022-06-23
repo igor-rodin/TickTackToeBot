@@ -7,5 +7,6 @@ class BotMode(enum.Enum):
 
 
 class GameState(enum.Enum):
-    START_TURN = 1
-    USER_TURN = 2
+    BOT_MODE = 1
+    START_TURN = 2
+    USER_TURN = 3

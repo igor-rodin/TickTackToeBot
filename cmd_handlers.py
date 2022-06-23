@@ -1,15 +1,14 @@
-import imp
 from telegram import Update, ParseMode
 from telegram.ext import CallbackContext, ConversationHandler
-from menu import create_choose_menu, create_board
+from menu import create_choose_menu, create_board, create_mode_menu
 from const import GameState
-import tictactoe as tic
-import bot_ai as ai
+import tictactoe_model as tic
+import bot_ai_wrap as ai
 
 
 cur_sym = tic.symbols[0]
 next_sym = tic.symbols[1]
-
+bot_mode = 2
 moves = tic.init_board
 
 
@@ -25,12 +24,26 @@ def start(update: Update, context: CallbackContext):
 
 def new_game(update: Update, context: CallbackContext):
     user = update.effective_user.first_name
-    msg = f"\tПривет, {user}! \nВыберите правильную сторону..."
+    msg = f"\tПривет, {user}! \nВыберите интеллект бота..."
+
+    mode_menu = create_mode_menu(tic.mode_dict)
+    update.message.reply_text(text=msg, reply_markup=mode_menu)
+
+    return GameState.BOT_MODE
+
+
+def bot_mode(update: Update, context: CallbackContext):
+    global bot_mode
+    query = update.callback_query
+    query.answer()
+    bot_mode = int(query.data)
+
+    msg = f"Вы выбрали уровень {tic.mode_dict[bot_mode]}\nТеперь выберите правильную сторону..."
     # X - U+274C
     # O - U+2B55
 
-    menu = create_choose_menu(tic.symbols)
-    update.message.reply_text(text=msg, reply_markup=menu)
+    sym_menu = create_choose_menu(tic.symbols)
+    query.edit_message_text(text=msg, reply_markup=sym_menu)
 
     return GameState.START_TURN
 
@@ -49,7 +62,7 @@ def turn(update: Update, context: CallbackContext):
 
         return ConversationHandler.END
 
-    bot_choice = ai.get_bot_turn(moves, next_sym)
+    bot_choice = ai.get_bot_turn(moves, next_sym, bot_mode)
     moves[bot_choice] = next_sym
 
     if tic.check_winers(moves, next_sym, bot_choice):
@@ -100,9 +113,9 @@ def select(update: Update, context: CallbackContext):
     if sym == cur_sym:
         msg = f"Ваш выбор: {cur_sym}\n Начинаем, ваш ход..."
     else:
-        bot_choice = ai.get_bot_turn(moves, next_sym)
+        bot_choice = ai.get_bot_turn(moves, next_sym, bot_mode)
         moves[bot_choice] = next_sym
-        msg = f"Ваш выбор: {cur_sym}\nПервым начинают - {next_sym}.\nИ ход соперника - {bot_choice}"
+        msg = f"Ваш выбор: {cur_sym}\nПервым начинают - {next_sym}.\nИ ход соперника - {bot_choice + 1}"
 
     game_board = create_board(moves)
 

@@ -9,6 +9,8 @@ digit_pattern = f"^{digits}$"
 game_state_hdl = ConversationHandler(
     entry_points=[CommandHandler('new_game', chdl.new_game)],
     states={
+        GameState.BOT_MODE: [CallbackQueryHandler(
+            chdl.bot_mode)],
         GameState.START_TURN: [CallbackQueryHandler(
             chdl.select)],
         GameState.USER_TURN: [CallbackQueryHandler(

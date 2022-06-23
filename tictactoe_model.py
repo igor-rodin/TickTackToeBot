@@ -3,6 +3,7 @@ from random import choice
 
 symbols = ('❌', '⭕')
 sym_dict = {'❌': 'X', '⭕': 'O'}
+mode_dict = {1: 'Dummy', 2: 'Random', 3: 'MegaBrain'}
 
 
 def init_board(size=3):
