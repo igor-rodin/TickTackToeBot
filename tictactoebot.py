@@ -1,5 +1,5 @@
-from telegram.ext import (Filters,
-                          Dispatcher, Updater, CommandHandler, ConversationHandler, CallbackQueryHandler, MessageHandler)
+from telegram.ext import (Dispatcher, Updater, CommandHandler,
+                          ConversationHandler, CallbackQueryHandler, MessageHandler)
 import cmd_handlers as chdl
 from const import GameState
 
